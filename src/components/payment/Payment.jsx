@@ -37,8 +37,9 @@ const Payment = () => {
 
     console.log('The Secret is >>>', clientSecret)
 
-    const handleSubmit =async(e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        // do all the fancy stripe stuff...
+        event.preventDefault();
         setProcessing(true);
 
         const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -46,25 +47,25 @@ const Payment = () => {
                 card: elements.getElement(CardElement)
             }
         }).then(({ paymentIntent }) => {
-            //paymentIntent = payment confirmation
+            // paymentIntent = payment confirmation
 
             db
-            .collection('users')
-            .doc(user?.uid)     // console.log(user) we will see the uid
-            .collection('orders')
-            .doc(paymentIntent.id)
-            .set({
-                basket: basket,
-                amount: paymentIntent.amount,
-                created: paymentIntent.created
-            })
+              .collection('users')
+              .doc(user?.uid)
+              .collection('orders')
+              .doc(paymentIntent.id)
+              .set({
+                  basket: basket,
+                  amount: paymentIntent.amount,
+                  created: paymentIntent.created
+              })
 
             setSucceeded(true);
-            setError(null);
-            setProcessing(false);
+            setError(null)
+            setProcessing(false)
 
             dispatch({
-                type :"EMTY_BASKET"
+                type: 'EMPTY_BASKET'
             })
 
             navigate("/orders");

@@ -42,6 +42,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/orders" element={[<Header/>, <Orders/>]} />
           <Route path = "/" element={[<Header />, <Home />]} />
           <Route path="/checkout" element={[<Header />, <Checkout />]} />
           <Route path="/login" element={<Login />} />
@@ -49,7 +50,7 @@ function App() {
             path="/payment"
             element={[<Header />, <Elements stripe={promise}><Payment /></Elements>]}
           />
-          <Route path="/orders" element={[<Header/>, <Orders/>]} />
+          
         </Routes>
           
       </div>
